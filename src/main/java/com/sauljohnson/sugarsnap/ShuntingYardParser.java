@@ -19,7 +19,7 @@ public class ShuntingYardParser<T> {
 
         // Prepare both stacks.
         Queue<ShuntingYardSymbol<T>> output = new LinkedList<ShuntingYardSymbol<T>>();
-        Stack<ShuntingYardSymbol<T>> operators = new Stack<ShuntingYardSymbol<T>>();
+        Stack<ShuntingYardOperator<T>> operators = new Stack<ShuntingYardOperator<T>>();
 
         // Shunting yard algorithm.
         while(!input.isEmpty()) {
@@ -31,24 +31,23 @@ public class ShuntingYardParser<T> {
                     break;
                 case FUNCTION:
                 case LEFT_PAREN:
-                    operators.push(buffer);
+                    operators.push((ShuntingYardOperator<T>) buffer);
                     System.out.println("Pushed function or left paren to operators.");
                     break;
                 case OPERATOR:
                     ShuntingYardOperator<T> bufferOperator = (ShuntingYardOperator<T>) buffer;
                     if (!operators.isEmpty()) {
-                        ShuntingYardOperator<T> stackOperator = (ShuntingYardOperator<T>) operators.peek();
                         while (!operators.isEmpty()
-                                && (stackOperator.getType() == ShuntingYardSymbolType.FUNCTION
-                                    || stackOperator.getPrecedence() > bufferOperator.getPrecedence()
-                                    || (stackOperator.getPrecedence() == bufferOperator.getPrecedence()
-                                        && stackOperator.isLeftAssociative()))
-                                && stackOperator.getType() != ShuntingYardSymbolType.LEFT_PAREN) {
+                                && (operators.peek().getType() == ShuntingYardSymbolType.FUNCTION
+                                    || operators.peek().getPrecedence() > bufferOperator.getPrecedence()
+                                    || (operators.peek().getPrecedence() == bufferOperator.getPrecedence()
+                                        && operators.peek().isLeftAssociative()))
+                                && operators.peek().getType() != ShuntingYardSymbolType.LEFT_PAREN) {
                             output.add(operators.pop());
                             System.out.println("Popped from operators to output.");
                         }
                     }
-                    operators.push(buffer);
+                    operators.push(bufferOperator);
                     System.out.println("Pushed operator to operators.");
                     break;
                 case RIGHT_PAREN:
