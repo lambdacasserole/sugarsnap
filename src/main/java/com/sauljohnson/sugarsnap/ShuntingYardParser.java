@@ -1,21 +1,24 @@
 package com.sauljohnson.sugarsnap;
 
-import java.util.LinkedList;
-import java.util.Arrays;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
+/**
+ * An implementation of the shunting yard algorithm that can operate on generic tokens.
+ *
+ * @since 01/01/2020
+ * @author Saul Johnson <saul.a.johnson@gmail.com>
+ */
 public class ShuntingYardParser<T> {
 
-    private ShuntingYardSymbol<T>[] symbols;
+    private List<ShuntingYardSymbol<T>> symbols;
 
-    public ShuntingYardParser(ShuntingYardSymbol<T>[] symbols) {
+    public ShuntingYardParser(List<ShuntingYardSymbol<T>> symbols) {
         this.symbols = symbols;
     }
 
-    public ShuntingYardSymbol<T>[] parse() {
+    public List<ShuntingYardSymbol<T>> parse() {
         // Queue up symbols to read.
-        Queue<ShuntingYardSymbol<T>> input = new LinkedList<ShuntingYardSymbol<T>>(Arrays.asList(symbols));
+        Queue<ShuntingYardSymbol<T>> input = new LinkedList<ShuntingYardSymbol<T>>(symbols);
 
         // Prepare both stacks.
         Queue<ShuntingYardSymbol<T>> output = new LinkedList<ShuntingYardSymbol<T>>();
@@ -65,9 +68,8 @@ public class ShuntingYardParser<T> {
         // Is there a paren on top of the stack? Then there are mismatched brackets.
         while (!operators.isEmpty()) {
             output.add(operators.pop());
-            System.out.println("Popped from operators to output.");
         }
         // Pass back output.
-        return output.toArray(new ShuntingYardSymbol[] {});
+        return new LinkedList<ShuntingYardSymbol<T>>(output);
     }
 }
