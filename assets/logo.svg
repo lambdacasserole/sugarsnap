@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="424.89926"
+   height="265.71802"
+   version="1.1"
+   id="svg13"
+   sodipodi:docname="logo.svg"
+   inkscape:version="0.92.4 (unknown)">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>two peas in a pod</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs17" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     id="namedview15"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.98333333"
+     inkscape:cx="183.15789"
+     inkscape:cy="-1.6124087"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g11" />
+  <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+  <title
+     id="title2">two peas in a pod</title>
+  <g
+     id="g11"
+     transform="translate(-127.95264,-78.707613)">
+    <title
+       id="title4">Layer 1</title>
+    <path
+       style="fill:#2ca02c;fill-opacity:1;stroke:#217821;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 134.37284,313.54237 c 0,0 140.3574,-97.33526 214.9492,-138.62712 63.467,-35.13348 197.0508,-92.372876 197.0508,-92.372876 l -27.7288,81.186436 -272.0339,149.49153 z"
+       id="path828"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cacccc" />
+    <ellipse
+       id="svg_6"
+       ry="88.5"
+       rx="88"
+       cy="250.54237"
+       cx="297.87292"
+       style="fill:#87de87;stroke:#3f7f00;stroke-width:4" />
+    <ellipse
+       rx="24.666668"
+       id="svg_21"
+       cy="198"
+       cx="204.00002"
+       ry="0"
+       style="fill:#ffffff;stroke:#191919" />
+    <ellipse
+       ry="88.5"
+       rx="88"
+       cy="180.04236"
+       cx="441.87292"
+       id="svg_1"
+       style="fill:#87de87;stroke:#3f7f00;stroke-width:4" />
+    <path
+       id="svg_13"
+       d="m 548.66104,83.940674 c 0,0 3.3982,23.177476 1.7118,34.601696 -6.6663,45.16271 -16.1392,94.4682 -46,129 -24.6761,28.53613 -64.8391,46.10495 -100,53 -26.537,22.92636 -57.4109,36.00815 -89.9999,40.33334 -49.1822,6.52743 -98.8822,-8.83114 -147.0001,-23.33334 -10.6091,-3.19748 -21.821,-3.65697 -33,-4 0,0 21.7993,-10.46757 33,-15 66.2632,-26.81365 138.6699,-38.84786 202,-72 55.237,-28.91547 106.6118,-66.25504 152,-109 10.504,-9.89227 27.2882,-33.601696 27.2882,-33.601696 z"
+       inkscape:connector-curvature="0"
+       style="fill:#37c837;stroke:#217821;stroke-width:4"
+       sodipodi:nodetypes="caacascaaac" />
+  </g>
+</svg>
