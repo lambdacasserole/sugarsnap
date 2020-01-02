@@ -26,23 +26,23 @@ The purpose of this library is to convert infix notation to RPN. That is to say,
 // Expression: 3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3
 // Expression given as list of symbols with strings attached.
 List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
-        new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER), // A number.
+        new ShuntingYardNumber<String>("3"), // A number.
         // An operator, with precedence 2 and left associativity.
         new ShuntingYardOperator<String>("+", 2, true),
-        new ShuntingYardSymbol<String>("4", ShuntingYardSymbolType.NUMBER),
+        new ShuntingYardNumber<String>("4"),
         new ShuntingYardOperator<String>("*", 3, true),
-        new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
+        new ShuntingYardNumber<String>("2"),
         new ShuntingYardOperator<String>("/", 3, true),
         new ShuntingYardLeftParen<String>("("), // An opening parenthesis.
-        new ShuntingYardSymbol<String>("1", ShuntingYardSymbolType.NUMBER),
+        new ShuntingYardNumber<String>("1"),
         new ShuntingYardOperator<String>("-", 2, true),
-        new ShuntingYardSymbol<String>("5", ShuntingYardSymbolType.NUMBER),
+        new ShuntingYardNumber<String>("5"),
         new ShuntingYardRightParen<String>(")"), // A closing parenthesis.
         // Precedence 4 exponentiation operator with right associativity.
         new ShuntingYardOperator<String>("^", 4, false), 
-        new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
+        new ShuntingYardNumber<String>("2"),
         new ShuntingYardOperator<String>("^", 4, false),
-        new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER)));
+        new ShuntingYardNumber<String>("3")));
         
 // Parse expression.
 ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
