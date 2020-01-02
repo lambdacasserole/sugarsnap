@@ -32,21 +32,21 @@ class ShuntingYardParserTest {
     void testParenthesisParsing() {
         // Test case: 3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3
         List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("3"),
                 new ShuntingYardOperator<String>("+", 2, true),
-                new ShuntingYardSymbol<String>("4", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("4"),
                 new ShuntingYardOperator<String>("*", 3, true),
-                new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("2"),
                 new ShuntingYardOperator<String>("/", 3, true),
                 new ShuntingYardLeftParen<String>("("),
-                new ShuntingYardSymbol<String>("1", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("1"),
                 new ShuntingYardOperator<String>("-", 2, true),
-                new ShuntingYardSymbol<String>("5", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("5"),
                 new ShuntingYardRightParen<String>(")"),
                 new ShuntingYardOperator<String>("^", 4, false),
-                new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("2"),
                 new ShuntingYardOperator<String>("^", 4, false),
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER)));
+                new ShuntingYardNumber<String>("3")));
 
         // Expected output: 3 4 2 * 1 5 - 2 3 ^ ^ / +
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
@@ -67,14 +67,14 @@ class ShuntingYardParserTest {
                 new ShuntingYardLeftParen<String>("("),
                 new ShuntingYardFunction<String>("max"),
                 new ShuntingYardLeftParen<String>("("),
-                new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("2"),
                 new ShuntingYardIgnorable<String>(","),
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("3"),
                 new ShuntingYardRightParen<String>(")"),
                 new ShuntingYardOperator<String>("/", 3, true),
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("3"),
                 new ShuntingYardOperator<String>("*", 3, true),
-                new ShuntingYardSymbol<String>("pi", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("pi"),
                 new ShuntingYardRightParen<String>(")")));
 
         // Expected output: 2 3 max 3 / pi * sin
@@ -96,14 +96,14 @@ class ShuntingYardParserTest {
                 new ShuntingYardLeftParen<String>("("),
                 new ShuntingYardFunction<String>("max"),
                 new ShuntingYardLeftParen<String>("("),
-                new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("2"),
                 new ShuntingYardIgnorable<String>(","),
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("3"),
                 new ShuntingYardRightParen<String>(")"),
                 new ShuntingYardOperator<String>("/", 3, true),
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("3"),
                 new ShuntingYardOperator<String>("*", 3, true),
-                new ShuntingYardSymbol<String>("pi", ShuntingYardSymbolType.NUMBER)));
+                new ShuntingYardNumber<String>("pi")));
 
         // Parse failure expected due to mismatched left parenthesis.
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
@@ -112,7 +112,6 @@ class ShuntingYardParserTest {
             fail("Exception was not thrown for mismatched left parenthesis.");
         } catch (ShuntingYardParserException e) {
             assertTrue(e.getMessage().toLowerCase().contains("parentheses"));
-            e.printStackTrace();
         }
     }
 
@@ -123,14 +122,14 @@ class ShuntingYardParserTest {
                 new ShuntingYardFunction<String>("sin"),
                 new ShuntingYardFunction<String>("max"),
                 new ShuntingYardLeftParen<String>("("),
-                new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("2"),
                 new ShuntingYardIgnorable<String>(","),
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("3"),
                 new ShuntingYardRightParen<String>(")"),
                 new ShuntingYardOperator<String>("/", 3, true),
-                new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("3"),
                 new ShuntingYardOperator<String>("*", 3, true),
-                new ShuntingYardSymbol<String>("pi", ShuntingYardSymbolType.NUMBER),
+                new ShuntingYardNumber<String>("pi"),
                 new ShuntingYardRightParen<String>(")")));
 
         // Parse failure expected due to mismatched right parenthesis.
@@ -140,7 +139,6 @@ class ShuntingYardParserTest {
             fail("Exception was not thrown for mismatched right parenthesis.");
         } catch (ShuntingYardParserException e) {
             assertTrue(e.getMessage().toLowerCase().contains("parentheses"));
-            e.printStackTrace();
         }
     }
 }
