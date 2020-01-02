@@ -27,7 +27,8 @@ The purpose of this library is to convert infix notation to RPN. That is to say,
 // Expression given as list of symbols with strings attached.
 List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
         new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER), // A number.
-        new ShuntingYardOperator<String>("+", 2, true), // An operator, with precedence 2 and left associativity.
+        // An operator, with precedence 2 and left associativity.
+        new ShuntingYardOperator<String>("+", 2, true),
         new ShuntingYardSymbol<String>("4", ShuntingYardSymbolType.NUMBER),
         new ShuntingYardOperator<String>("*", 3, true),
         new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
@@ -37,7 +38,8 @@ List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<Strin
         new ShuntingYardOperator<String>("-", 2, true),
         new ShuntingYardSymbol<String>("5", ShuntingYardSymbolType.NUMBER),
         new ShuntingYardRightParen<String>(")"), // A closing parenthesis.
-        new ShuntingYardOperator<String>("^", 4, false), // Precedence 4 exponentiation operator with right associativity.
+        // Precedence 4 exponentiation operator with right associativity.
+        new ShuntingYardOperator<String>("^", 4, false), 
         new ShuntingYardSymbol<String>("2", ShuntingYardSymbolType.NUMBER),
         new ShuntingYardOperator<String>("^", 4, false),
         new ShuntingYardSymbol<String>("3", ShuntingYardSymbolType.NUMBER)));
