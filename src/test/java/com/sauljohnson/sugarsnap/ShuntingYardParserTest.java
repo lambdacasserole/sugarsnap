@@ -29,7 +29,7 @@ class ShuntingYardParserTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testParenthesisParsing() {
+    void testParenthesisShunting() {
         // Test case: 3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3
         List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
                 new ShuntingYardNumber<String>("3"),
@@ -51,7 +51,7 @@ class ShuntingYardParserTest {
         // Expected output: 3 4 2 * 1 5 - 2 3 ^ ^ / +
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
         try {
-            List<ShuntingYardSymbol<String>> output = parser.parse(input);
+            List<ShuntingYardSymbol<String>> output = parser.shunt(input);
             assertEquals("342*15-23^^/+", concatStringSymbols(output));
         } catch (ShuntingYardParserException e) {
             e.printStackTrace();
@@ -60,12 +60,12 @@ class ShuntingYardParserTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testFunctionParsing() {
+    void testFunctionShunting() {
         // Test case: sin ( max ( 2 , 3 ) / 3 * pi )
         List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
-                new ShuntingYardFunction<String>("sin"),
+                new ShuntingYardFunction<String>("sin", 1),
                 new ShuntingYardLeftParen<String>("("),
-                new ShuntingYardFunction<String>("max"),
+                new ShuntingYardFunction<String>("max", 2),
                 new ShuntingYardLeftParen<String>("("),
                 new ShuntingYardNumber<String>("2"),
                 new ShuntingYardIgnorable<String>(","),
@@ -80,7 +80,7 @@ class ShuntingYardParserTest {
         // Expected output: 2 3 max 3 / pi * sin
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
         try {
-            List<ShuntingYardSymbol<String>> output = parser.parse(input);
+            List<ShuntingYardSymbol<String>> output = parser.shunt(input);
             assertEquals("23max3/pi*sin", concatStringSymbols(output));
         } catch (ShuntingYardParserException e) {
             e.printStackTrace();
@@ -89,12 +89,12 @@ class ShuntingYardParserTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testMismatchedLeftParen() {
+    void testMismatchedLeftParenShunting() {
         // Test case: sin ( max ( 2 , 3 ) / 3 * pi
         List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
-                new ShuntingYardFunction<String>("sin"),
+                new ShuntingYardFunction<String>("sin", 1),
                 new ShuntingYardLeftParen<String>("("),
-                new ShuntingYardFunction<String>("max"),
+                new ShuntingYardFunction<String>("max", 2),
                 new ShuntingYardLeftParen<String>("("),
                 new ShuntingYardNumber<String>("2"),
                 new ShuntingYardIgnorable<String>(","),
@@ -108,7 +108,7 @@ class ShuntingYardParserTest {
         // Parse failure expected due to mismatched left parenthesis.
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
         try {
-            List<ShuntingYardSymbol<String>> output = parser.parse(input);
+            parser.shunt(input);
             fail("Exception was not thrown for mismatched left parenthesis.");
         } catch (ShuntingYardParserException e) {
             assertTrue(e.getMessage().toLowerCase().contains("parentheses"));
@@ -116,11 +116,11 @@ class ShuntingYardParserTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testMismatchedRightParen() {
+    void testMismatchedRightParenShunting() {
         // Test case: sin ( max ( 2 , 3 ) / 3 * pi
         List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
-                new ShuntingYardFunction<String>("sin"),
-                new ShuntingYardFunction<String>("max"),
+                new ShuntingYardFunction<String>("sin", 1),
+                new ShuntingYardFunction<String>("max", 2),
                 new ShuntingYardLeftParen<String>("("),
                 new ShuntingYardNumber<String>("2"),
                 new ShuntingYardIgnorable<String>(","),
@@ -135,7 +135,7 @@ class ShuntingYardParserTest {
         // Parse failure expected due to mismatched right parenthesis.
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
         try {
-            List<ShuntingYardSymbol<String>> output = parser.parse(input);
+            parser.shunt(input);
             fail("Exception was not thrown for mismatched right parenthesis.");
         } catch (ShuntingYardParserException e) {
             assertTrue(e.getMessage().toLowerCase().contains("parentheses"));
