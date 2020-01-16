@@ -10,6 +10,13 @@ import java.util.*;
  */
 public class ShuntingYardParser<T> {
 
+    /**
+     * Converts the given list of symbols from reverse Polish notation (RPN) to a parse tree.
+     *
+     * @param shunted                       the list of symbols to convert
+     * @return                              the resulting parse tree
+     * @throws ShuntingYardParserException  in case of parse error
+     */
     private ParseTreeNode<T> generateParseTree(List<ShuntingYardSymbol<T>> shunted) throws ShuntingYardParserException {
         Stack<ParseTreeNode<T>> stack = new Stack<ParseTreeNode<T>>();
         for (ShuntingYardSymbol<T> symbol : shunted) {
@@ -47,8 +54,9 @@ public class ShuntingYardParser<T> {
      * Converts the given list of symbols from infix notation to reverse Polish notation (RPN) using the shunting yard
      * algorithm.
      *
-     * @param symbols   the list of symbols to parse in infix notation
-     * @return          the parsed list of symbols in reverse Polish notation (RPN
+     * @param symbols                       the list of symbols to parse in infix notation
+     * @return                              the parsed list of symbols in reverse Polish notation (RPN)
+     * @throws ShuntingYardParserException  in case of parse error
      */
     public List<ShuntingYardSymbol<T>> shunt(List<ShuntingYardSymbol<T>> symbols) throws ShuntingYardParserException {
         // Queue up symbols to read.

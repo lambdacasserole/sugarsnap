@@ -28,6 +28,20 @@ class ShuntingYardParserTest {
         return sb.toString();
     }
 
+    /**
+     * Converts a parse tree to a string, for easy comparison.
+     *
+     * @param tree  the tree to convert
+     * @return      the resulting string
+     */
+    private String stringifyTree(ParseTreeNode<String> tree) {
+        StringBuilder output = new StringBuilder(tree.getValue());
+        for (ParseTreeNode<String> child : tree.getChildren()) {
+            output.append(child);
+        }
+        return output.toString();
+    }
+
     @org.junit.jupiter.api.Test
     void testParenthesisShunting() {
         // Test case: 3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3
