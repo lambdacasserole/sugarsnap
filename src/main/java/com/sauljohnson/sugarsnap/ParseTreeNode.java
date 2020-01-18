@@ -52,4 +52,13 @@ public class ParseTreeNode<T> {
     public List<ParseTreeNode<T>> getChildren() {
         return children;
     }
+
+    /**
+     * Returns true if this node has children, otherwise returns false.
+     *
+     * @return  true if this node has children, otherwise false
+     */
+    public boolean hasChildren() {
+        return children.size() == 0;
+    }
 }

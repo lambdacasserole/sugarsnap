@@ -23,6 +23,9 @@ class ShuntingYardParserTest {
     private String concatStringSymbols(List<ShuntingYardSymbol<String>> stringSymbols) {
         StringBuilder sb = new StringBuilder();
         for (ShuntingYardSymbol<String> stringShuntingYardSymbol : stringSymbols) {
+            if (sb.length() > 0) {
+                sb.append(" ");
+            }
             sb.append(stringShuntingYardSymbol.getValue());
         }
         return sb.toString();
@@ -35,10 +38,12 @@ class ShuntingYardParserTest {
      * @return      the resulting string
      */
     private String stringifyTree(ParseTreeNode<String> tree) {
-        StringBuilder output = new StringBuilder(tree.getValue());
+        StringBuilder output = new StringBuilder(tree.hasChildren() ? "" : "(");
+        output.append(tree.getValue());
         for (ParseTreeNode<String> child : tree.getChildren()) {
-            output.append(child);
+            output.append(" ").append(stringifyTree(child));
         }
+        output.append(tree.hasChildren() ? "" : ")");
         return output.toString();
     }
 
@@ -66,7 +71,7 @@ class ShuntingYardParserTest {
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
         try {
             List<ShuntingYardSymbol<String>> output = parser.shunt(input);
-            assertEquals("342*15-23^^/+", concatStringSymbols(output));
+            assertEquals("3 4 2 * 1 5 - 2 3 ^ ^ / +", concatStringSymbols(output));
         } catch (ShuntingYardParserException e) {
             e.printStackTrace();
             fail("Exception encountered while parsing valid expression.");
@@ -95,7 +100,7 @@ class ShuntingYardParserTest {
         ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
         try {
             List<ShuntingYardSymbol<String>> output = parser.shunt(input);
-            assertEquals("23max3/pi*sin", concatStringSymbols(output));
+            assertEquals("2 3 max 3 / pi * sin", concatStringSymbols(output));
         } catch (ShuntingYardParserException e) {
             e.printStackTrace();
             fail("Exception encountered while parsing valid expression.");
@@ -153,6 +158,60 @@ class ShuntingYardParserTest {
             fail("Exception was not thrown for mismatched right parenthesis.");
         } catch (ShuntingYardParserException e) {
             assertTrue(e.getMessage().toLowerCase().contains("parentheses"));
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    void testParenthesisParsing() {
+        // Test case: 3 4 2 * 1 5 - 2 3 ^ ^ / +
+        List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
+                new ShuntingYardNumber<String>("3"),
+                new ShuntingYardNumber<String>("4"),
+                new ShuntingYardNumber<String>("2"),
+                new ShuntingYardOperator<String>("*", 3, true),
+                new ShuntingYardNumber<String>("1"),
+                new ShuntingYardNumber<String>("5"),
+                new ShuntingYardOperator<String>("-", 2, true),
+                new ShuntingYardNumber<String>("2"),
+                new ShuntingYardNumber<String>("3"),
+                new ShuntingYardOperator<String>("^", 4, false),
+                new ShuntingYardOperator<String>("^", 4, false),
+                new ShuntingYardOperator<String>("/", 3, true),
+                new ShuntingYardOperator<String>("+", 2, true)));
+
+        // Expected output: (+ (/ (^ (^ 3 2) (- 5 1)) (* 2 4)) 3)
+        ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
+        try {
+            ParseTreeNode<String> output = parser.generateParseTree(input);
+            assertEquals("(+ (/ (^ (^ 3 2) (- 5 1)) (* 2 4)) 3)", stringifyTree(output));
+        } catch (ShuntingYardParserException e) {
+            e.printStackTrace();
+            fail("Exception encountered while generating parse tree for valid expression.");
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    void testFunctionParsing() {
+        // Test case: 2 3 max 3 / pi * sin
+        List<ShuntingYardSymbol<String>> input = new LinkedList<ShuntingYardSymbol<String>>(Arrays.asList(
+                new ShuntingYardNumber<String>("2"),
+                new ShuntingYardNumber<String>("3"),
+                new ShuntingYardFunction<String>("max", 2),
+                new ShuntingYardNumber<String>("3"),
+                new ShuntingYardOperator<String>("/", 3, true),
+                new ShuntingYardNumber<String>("pi"),
+                new ShuntingYardOperator<String>("*", 3, true),
+                new ShuntingYardFunction<String>("sin", 1)));
+
+        // Expected output: (sin (* pi (/ 3 (max 3 2))))
+        ShuntingYardParser<String> parser = new ShuntingYardParser<String>();
+        try {
+            ParseTreeNode<String> output = parser.generateParseTree(input);
+            String tt = stringifyTree(output);
+            assertEquals("(sin (* pi (/ 3 (max 3 2))))", stringifyTree(output));
+        } catch (ShuntingYardParserException e) {
+            e.printStackTrace();
+            fail("Exception encountered while generating parse tree for valid expression.");
         }
     }
 }

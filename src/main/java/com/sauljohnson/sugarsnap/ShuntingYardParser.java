@@ -17,7 +17,7 @@ public class ShuntingYardParser<T> {
      * @return                              the resulting parse tree
      * @throws ShuntingYardParserException  in case of parse error
      */
-    private ParseTreeNode<T> generateParseTree(List<ShuntingYardSymbol<T>> shunted) throws ShuntingYardParserException {
+    public ParseTreeNode<T> generateParseTree(List<ShuntingYardSymbol<T>> shunted) throws ShuntingYardParserException {
         Stack<ParseTreeNode<T>> stack = new Stack<ParseTreeNode<T>>();
         for (ShuntingYardSymbol<T> symbol : shunted) {
             switch(symbol.getType()){
